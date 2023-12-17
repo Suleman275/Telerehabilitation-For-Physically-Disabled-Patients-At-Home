@@ -4,11 +4,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class BasicBody : MonoBehaviour {
+    public nuitrack.JointType[] jointsToTrack;
+    public GameObject jointPrefab;
+    
     string message = "";
 
-    public nuitrack.JointType[] jointsToTrack;
     GameObject[] jointGOList;
-    public GameObject jointPrefab;
 
     void Start() {
         jointGOList = new GameObject[jointsToTrack.Length];
@@ -26,8 +27,10 @@ public class BasicBody : MonoBehaviour {
 
             for (int q = 0; q < jointsToTrack.Length; q++) {
                 UserData.SkeletonData.Joint joint = NuitrackManager.Users.Current.Skeleton.GetJoint(jointsToTrack[q]);
+
                 jointGOList[q].transform.localPosition = joint.Position;
             }
+
         } else {
             message = "Skeleton not found";
         }
