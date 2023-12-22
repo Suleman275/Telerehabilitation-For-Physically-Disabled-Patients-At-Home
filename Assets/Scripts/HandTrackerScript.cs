@@ -2,18 +2,22 @@ using UnityEngine;
 using NuitrackSDK;
 
 public class HandTrackerScript : MonoBehaviour {
+
+    public static HandTrackerScript Instance { get; private set; }
+
     [SerializeField] private bool visulaiseHands;
     [SerializeField] private GameObject handPrefab;
 
-    private GameObject leftHandGO;
-    private GameObject rightHandGO;
+    public GameObject leftHandGO;
+    public GameObject rightHandGO;
 
     UserData.SkeletonData.Joint leftHandJoint;
     UserData.SkeletonData.Joint rightHandJoint;
 
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start() {
+        Instance = this;
+
         if (visulaiseHands) {
             leftHandGO = Instantiate(handPrefab);
             rightHandGO = Instantiate(handPrefab);
@@ -44,5 +48,13 @@ public class HandTrackerScript : MonoBehaviour {
         else {
             Debug.Log("Body not in View");
         }
+    }
+
+    public GameObject getLeftHandGO() {
+        return leftHandGO;
+    }
+
+    public GameObject getRightHandGO() {
+        return rightHandGO;
     }
 }
